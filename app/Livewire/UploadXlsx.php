@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Events\FileUploaded;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -18,8 +20,18 @@ class UploadXlsx extends Component
     {
         $filename = $this->file->getClientOriginalName();
 
-        $path = $this->file->storeAs('/excel', $filename, 'public');
-        session()->flash('message', 'File uploaded successfully, is now being processed.');
+        $exists = Storage::disk('public')->exists("excel/$filename");
+        if(!$exists){
+
+            $path = $this->file->storeAs('/excel', $filename, 'public');
+            Session::flash('message', 'File uploaded successfully, is now being processed.');
+            FileUploaded::dispatch($path);
+
+        } else {
+
+            Session::flash('message', 'File with this name already exists and being or has been processed!');
+        }
+        
     }
 
     public function render()
