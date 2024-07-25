@@ -56,10 +56,8 @@ class PvTable extends DataTableComponent
             Column::make("Doctor Phone", "doctor.phone")
                 ->sortable(),
             Column::make("Doctor Fax", "doctor.fax")
-                ->searchable()
                 ->sortable(),
             Column::make("Doctor NPI", "doctor.npi")
-                ->searchable()
                 ->sortable(),
         ];
     }

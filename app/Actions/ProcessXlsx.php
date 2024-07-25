@@ -4,11 +4,14 @@ namespace App\Actions;
 
 use App\Models\PvDoctor;
 use App\Models\PvPatient;
+use Illuminate\Support\Facades\Date as FacadesDate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\Concerns\AsAction;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+
 
 class ProcessXlsx
 {
@@ -43,11 +46,13 @@ class ProcessXlsx
             $cellIterator->setIterateOnlyExistingCells(FALSE);
             $cells = [];
             foreach ($cellIterator as $cell) {
-                $cells[] = $cell->getValue();
+
+                $cells[] = $cell->getFormattedValue();
+    
             }
             $rows[] = $cells;
         }
-        
+        Log::info(json_encode($rows, JSON_PRETTY_PRINT));
         $this->bulkInsert($rows);
     }
 
@@ -88,13 +93,11 @@ class ProcessXlsx
 
         $doctorData = [];
         $patientData = [];
-        Log::info(json_encode($doctorColumns, JSON_PRETTY_PRINT));
+        
         foreach ($this->pvDoctor as $record) {
-            
-            Log::info($record);
             $doctorData[] = array_combine($doctorColumns, $record);
         }
-
+    
         foreach ($this->pvPatient as $record) {
             $patientData[] = array_combine($patientColumns, $record);
         }
