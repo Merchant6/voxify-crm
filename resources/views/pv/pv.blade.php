@@ -24,6 +24,7 @@
                     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                         PV Records:
                     </h2>
+                    <br>
                     <livewire:pv-table theme="tailwind"/>
                 </div>
             </div>

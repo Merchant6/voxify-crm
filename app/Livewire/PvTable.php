@@ -22,17 +22,15 @@ class PvTable extends DataTableComponent
             Column::make("Id", "id")
                 ->sortable(),
             Column::make("First name", "first_name")
-                ->searchable()
-                ->sortable(),
+                ->searchable(),
             Column::make("Last name", "last_name")
-                ->searchable()
-                ->sortable(),
+                ->searchable(),
             Column::make("Dob", "dob")
                 ->sortable(),
             Column::make("Phone", "phone")
                 ->sortable(),
             Column::make("Mb id", "mb_id")
-                ->sortable(),
+                ->searchable(),
             Column::make("Address", "address")
                 ->sortable(),
             Column::make("City", "city")
@@ -46,8 +44,7 @@ class PvTable extends DataTableComponent
             Column::make("Weight", "weight")
                 ->sortable(),
             Column::make("Doctor Name", "doctor.name")
-                ->searchable()
-                ->sortable(),
+                ->searchable(),
             Column::make("Doctor Address", "doctor.address")
                 ->sortable(),
             Column::make("Doctor City", "doctor.city")
