@@ -2,7 +2,6 @@
     <div class="p-6 text-gray-900 dark:text-gray-100">
         <form wire:submit.prevent="save" enctype="multipart/form-data">
             <div class="flex flex-col space-y-4">
-                <x-input-label for="file" :value="__('Select Excel File:')" />
                 <input type="file" id="file" wire:model="file" class="border rounded-md px-3 py-2">
                 <x-input-error :messages="$errors->get('file')" class="mt-2" />
                 @if (session()->has('message'))

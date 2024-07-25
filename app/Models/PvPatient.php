@@ -24,11 +24,10 @@ class PvPatient extends Model
         'zip_code',
         'height',
         'weight',
-        'pain',
     ];
 
     public function doctor()
     {
-        return $this->belongsTo(PvDoctor::class);
+        return $this->belongsTo(PvDoctor::class, 'id');
     }
 }

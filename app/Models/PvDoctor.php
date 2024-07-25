@@ -24,6 +24,6 @@ class PvDoctor extends Model
     
     public function patients()
     {
-        return $this->hasMany(PvPatient::class);
+        return $this->hasMany(PvPatient::class, 'id');
     }
 }
