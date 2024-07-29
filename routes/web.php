@@ -17,4 +17,8 @@ Route::get('pv-table', [PvTableController::class, 'index'])
     ->middleware(['auth'])
     ->name('pv');
 
+Route::get('pv-pdf', [PvTableController::class, 'createdPdf'])
+    ->middleware('auth')
+    ->name('pv-pdf');
+
 require __DIR__.'/auth.php';

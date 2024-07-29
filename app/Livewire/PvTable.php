@@ -5,6 +5,9 @@ namespace App\Livewire;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\PvPatient;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Log;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class PvTable extends DataTableComponent
 {
@@ -12,8 +15,16 @@ class PvTable extends DataTableComponent
 
     public function configure(): void
     {
-        $this->setPrimaryKey('id');
+        $this->setPrimaryKey('id')
+            ->setTableRowUrl(function($row) {
+
+                return route('pv-pdf', [
+                    'record' => $row,
+                ]);
+
+            });
         $this->setEagerLoadAllRelationsEnabled();
+
     }
 
     public function columns(): array
@@ -61,4 +72,5 @@ class PvTable extends DataTableComponent
                 ->sortable(),
         ];
     }
+
 }

@@ -26,6 +26,13 @@ class PvPatient extends Model
         'weight',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'id',
+        'pv_doctor_id'
+    ];
+
     public function doctor()
     {
         return $this->belongsTo(PvDoctor::class, 'id');

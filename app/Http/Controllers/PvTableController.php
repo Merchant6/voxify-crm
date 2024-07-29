@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreatePvPdf;
+use App\Models\PvPatient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class PvTableController extends Controller
 {
@@ -60,5 +63,11 @@ class PvTableController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function createdPdf(Request $request)
+    {    
+        $query = $request->query('record');   
+        return CreatePvPdf::run($query);
     }
 }
