@@ -2,16 +2,23 @@
 
 namespace App\Livewire;
 
+use App\Actions\CreatePvPdf;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\PvPatient;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Log;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class PvTable extends DataTableComponent
 {
     public ?string $file;
+    public array $bulkActions = [
+
+        'createBulkPdf' => 'Export as PDF',
+    
+    ];
 
     public function builder(): Builder
     {   
@@ -31,7 +38,7 @@ class PvTable extends DataTableComponent
             ->setTableRowUrl(function($row) {
 
                 return route('pv-pdf', [
-                    'file' => $row,
+                    'record' => $row,
                 ]);
 
             });
@@ -83,6 +90,17 @@ class PvTable extends DataTableComponent
             Column::make("Doctor NPI", "doctor.npi")
                 ->sortable(),
         ];
+    }
+
+    public function createBulkPdf()
+    {
+        foreach ($this->selected as $item) {
+            CreatePvPdf::run($item);
+        }
+
+        $this->clearSelected();
+
+        return CreatePvPdf::make()->zip();
     }
 
 }

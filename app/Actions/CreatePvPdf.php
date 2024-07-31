@@ -3,11 +3,15 @@
 namespace App\Actions;
 
 use App\Models\PvPatient;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\Concerns\AsAction;
 use PhpOffice\PhpWord\TemplateProcessor;
 use NcJoes\OfficeConverter\OfficeConverter;
+use ZipArchive;
 
 class CreatePvPdf
 {
@@ -35,8 +39,7 @@ class CreatePvPdf
 
         //Full Address
         $address = "$street, $city, $state, $zip";
-        Log::info($address);
-
+    
         $word = new TemplateProcessor($template);
         $word->setValue('DOCTOR NAME', $record['doctor.name']);
         $word->setValue('DOCTOR ADDRESS', $record['doctor.address']);
@@ -57,8 +60,10 @@ class CreatePvPdf
         
         $path = public_path($filenameWithExtenstion);
         $downloadFile = $this->docxToPdf($path, $filename);
+        
+        $publicPathwithBaseName = public_path('bulk/' . basename($downloadFile));
 
-        return response()->download($downloadFile);
+        File::move($downloadFile, $publicPathwithBaseName);
     }
 
     public function get(string $query): array|bool
@@ -85,6 +90,30 @@ class CreatePvPdf
         $converter = new OfficeConverter($path, public_path());
         $converter->convertTo($outputPdfName);
 
+        File::delete($path);
+
         return public_path($outputPdfName);
+    }
+
+    public function zip()
+    {   
+        $date = date('d-m-Y');
+
+        $zip = new ZipArchive();
+        $zipFilename = "PV-PDFs-$date.zip";
+
+        if($zip->open(public_path($zipFilename), ZipArchive::CREATE) == true){
+
+            $files = File::files(public_path('bulk'));
+            foreach ($files as $key => $value) {
+                $relativeName = basename($value);
+                $zip->addFile($value, $relativeName);
+            }
+            $zip->close();
+        }
+
+        (new Filesystem)->cleanDirectory(public_path('bulk'));
+
+        return response()->download(public_path($zipFilename));
     }
 }

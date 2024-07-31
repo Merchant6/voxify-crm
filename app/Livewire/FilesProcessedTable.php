@@ -9,7 +9,7 @@ use App\Models\FilesProcessed;
 class FilesProcessedTable extends DataTableComponent
 {
     protected $model = FilesProcessed::class;
-
+    
     public function configure(): void
     {
         $this->setPrimaryKey('id')
