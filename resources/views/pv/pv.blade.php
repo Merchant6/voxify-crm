@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('PV Table') }}
+            {{ __('PV Upload') }}
         </h2>
     </x-slot>
 
@@ -22,10 +22,11 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                        PV Records:
+                        PV Sheets:
                     </h2>
                     <br>
-                    <livewire:pv-table theme="tailwind"/>
+                    {{-- <livewire:pv-table theme="tailwind"/> --}}
+                    <livewire:files-processed-table theme="tailwind">
                 </div>
             </div>
         </div>

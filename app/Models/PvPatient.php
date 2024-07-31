@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PvPatient extends Model
 {
@@ -24,6 +25,7 @@ class PvPatient extends Model
         'zip_code',
         'height',
         'weight',
+        'files_processed_id'
     ];
 
     protected $hidden = [
@@ -33,8 +35,13 @@ class PvPatient extends Model
         'pv_doctor_id'
     ];
 
-    public function doctor()
+    public function doctor(): BelongsTo
     {
         return $this->belongsTo(PvDoctor::class, 'id');
+    }
+
+    public function filesProcessed(): BelongsTo
+    {   
+        return $this->belongsTo(FilesProcessed::class);
     }
 }

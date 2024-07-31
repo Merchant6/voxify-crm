@@ -34,7 +34,7 @@ new class extends Component
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('pv')" :active="request()->routeIs('pv')" wire:navigate>
-                        {{ __('PV Table') }}
+                        {{ __('PV Upload') }}
                     </x-nav-link>
                 </div>
             </div>

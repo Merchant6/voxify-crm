@@ -4,6 +4,8 @@ namespace App\Listeners;
 
 use App\Actions\ProcessXlsx;
 use App\Events\FileUploaded;
+use App\Models\FilesProcessed;
+use App\Models\FilesProcessedPivot;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
@@ -24,6 +26,13 @@ class ProcessUploadedFile
     public function handle(FileUploaded $event): void
     {
         $filePath = $event->filePath;
-        ProcessXlsx::run($filePath);
+
+        $filename = last(explode("/", $filePath));
+        $insert = FilesProcessed::create([
+            'file_name' => $filename,
+            'is_processed' => true
+        ]);
+
+        ProcessXlsx::run($filePath, $insert->id);
     }
 }

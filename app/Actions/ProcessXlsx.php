@@ -21,14 +21,14 @@ class ProcessXlsx
     protected array $pvDoctor = [];
     protected int $totalHeadings = 19;
 
-    public function handle(string $filePath)
+    public function handle(string $filePath, string $sheetId)
     {   
         //Fully Qualified File Path 
         $fqfp = public_path() . '/storage/' . $filePath;
 
         //Spreadsheet
         $spreadsheet = $this->initReader($fqfp);
-        $this->spreadsheetToArray($spreadsheet);
+        $this->spreadsheetToArray($spreadsheet, $sheetId);
 
         $rows = [];
         $rows['patients'] = $this->pvPatient;
@@ -37,7 +37,7 @@ class ProcessXlsx
         Log::info(json_encode($rows, JSON_PRETTY_PRINT));
     }
 
-    public function spreadsheetToArray(Spreadsheet $spreadsheet): void
+    public function spreadsheetToArray(Spreadsheet $spreadsheet, string $sheetId): void
     {
         $worksheet = $spreadsheet->getActiveSheet();
         $rows = [];
@@ -53,7 +53,7 @@ class ProcessXlsx
             $rows[] = $cells;
         }
         Log::info(json_encode($rows, JSON_PRETTY_PRINT));
-        $this->bulkInsert($rows);
+        $this->bulkInsert($rows, $sheetId);
     }
 
     public function initReader(string $file): Spreadsheet
@@ -83,7 +83,7 @@ class ProcessXlsx
         $this->pvDoctor = $doctorData;
     }
 
-    public function bulkInsert(array $rows)
+    public function bulkInsert(array $rows, string $sheetId)
     {
         $this->splitArrayValues($rows);
 
@@ -108,6 +108,7 @@ class ProcessXlsx
 
         $patientDataWithDoctorId = [];
         foreach ($patientData as $index => $patient) {
+            $patient['files_processed_id'] = $sheetId;
             $patientDataWithDoctorId[] = array_merge(['pv_doctor_id' => $doctorIds[$index]], $patient);
         }
 

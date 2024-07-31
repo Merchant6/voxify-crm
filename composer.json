@@ -13,6 +13,7 @@
         "livewire/livewire": "^3.4",
         "livewire/volt": "^1.0",
         "lorisleiva/laravel-actions": "^2.8",
+        "ncjoes/office-converter": "^1.0",
         "phpoffice/phpspreadsheet": "^2.1",
         "phpoffice/phpword": "^1.2",
         "rappasoft/laravel-livewire-tables": "^3.3"

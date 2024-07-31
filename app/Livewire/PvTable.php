@@ -11,7 +11,19 @@ use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class PvTable extends DataTableComponent
 {
-    protected $model = PvPatient::class;
+    public ?string $file;
+
+    public function builder(): Builder
+    {   
+        $request = (object)request();
+
+        return PvPatient::query()
+        ->where(
+                'files_processed_id', 
+                $request->query('file') ?? 1
+            )
+            ->select();
+    }
 
     public function configure(): void
     {
@@ -19,7 +31,7 @@ class PvTable extends DataTableComponent
             ->setTableRowUrl(function($row) {
 
                 return route('pv-pdf', [
-                    'record' => $row,
+                    'file' => $row,
                 ]);
 
             });

@@ -13,8 +13,8 @@ class PvTableController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
-        return view('pv.pv');
+    {       
+       return view('pv.pv-table');
     }
 
     /**
@@ -22,7 +22,7 @@ class PvTableController extends Controller
      */
     public function create()
     {
-        //
+        return view('pv.pv');
     }
 
     /**
