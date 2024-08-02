@@ -42,7 +42,9 @@ class PvTable extends DataTableComponent
                 ]);
 
             });
+
         $this->setEagerLoadAllRelationsEnabled();
+        $this->bulkActionsAreEnabled();
 
     }
 

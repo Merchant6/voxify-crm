@@ -36,6 +36,9 @@ new class extends Component
                     <x-nav-link :href="route('pv')" :active="request()->routeIs('pv')" wire:navigate>
                         {{ __('PV Upload') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('doctor-form')" :active="request()->routeIs('pv')" wire:navigate>
+                        {{ __('Doctor Order Form') }}
+                    </x-nav-link>
                 </div>
             </div>
 

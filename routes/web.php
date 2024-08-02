@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DoctorOrderController;
 use App\Http\Controllers\PvTableController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,5 +25,9 @@ Route::get('pv-table', [PvTableController::class, 'index'])
 Route::get('pv-pdf', [PvTableController::class, 'createdPdf'])
     ->middleware('auth')
     ->name('pv-pdf');
+
+Route::get('doctor-form', [DoctorOrderController::class, 'create'])
+    ->middleware('auth')
+    ->name('doctor-form');    
 
 require __DIR__.'/auth.php';
