@@ -2,8 +2,11 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
+use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Offset;
 
 class CreateDoctorOrder extends Component
 {   
@@ -24,6 +27,7 @@ class CreateDoctorOrder extends Component
     public $private_insurance_no;
     public $height;
     public $weight;
+    public $braces;
 
     public $physician_name;
     public $physician_npi;
@@ -49,9 +53,10 @@ class CreateDoctorOrder extends Component
         'primary_insurance' => 'required|string|max:255',
         'policy_no' => 'required|string|max:255',
         'private_insurance' => 'required|string|max:255',
-        'private_insurance_no' => 'nullable|string|max:255',
+        'private_insurance_no' => 'required|string|max:255',
         'height' => 'required|string|max:10',
         'weight' => 'required|string|max:10',
+        'braces' => 'required',
 
         // Second Column
         'physician_name' => 'required|string|max:255',
@@ -60,9 +65,9 @@ class CreateDoctorOrder extends Component
         'physician_state' => 'required|string|max:255',
         'physician_postal_code' => 'required|string|max:10',
         'physician_number' => 'required|string|max:15',
-        'physician_fax_number' => 'nullable|string|max:15',
-        'physician_signature' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        'physician_signed_date' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'physician_fax_number' => 'required|string|max:15',
+        'physician_signature' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        'physician_signed_date' => 'required|image|mimes:jpeg,png,jpg|max:2048',
     ];
 
     protected $messages = [
@@ -89,8 +94,15 @@ class CreateDoctorOrder extends Component
         'physician_number.required' => 'The physician number is required.',
         'physician_signature.image' => 'The physician signature must be an image.',
         'physician_signed_date.image' => 'The physician signed date must be an image.',
+        'braces.required' => "The brace option is required."
     ];
 
+    public function submit()
+    {
+        $validated = $this->validate();
+        $slice = array_chunk(array: $validated, length: 16, preserve_keys: true);
+        Log::info($slice);
+    }
 
     public function render()
     {

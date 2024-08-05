@@ -108,6 +108,25 @@
                 <input type="text" id="weight" class="dark:bg-gray-700 mt-1 block w-full border-gray-300 rounded-md shadow-sm" wire:model="weight">
                 @error('weight') <span class="text-red-600">{{ $message }}</span> @enderror
             </div>
+
+            <!-- Types of Braces -->
+            <div class="mb-4">
+                <label for="brace" class="block text-white-700">Brace</label>
+                {{-- <input type="file" id="physician_signed_date" class="dark:bg-gray-700 mt-1 block w-full border-gray-300 rounded-md shadow-sm p-4" wire:model="physician_signed_date"> --}}
+                <select wire:model="braces" id="brace" class="dark:bg-gray-700 mt-1 mb-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    <option>Select an option</option>
+                    <option value="back-braces">Back Braces</option>
+                    <option value="both-knee-brace">Both Knee Brace</option>
+                    <option value="left-knee-brace">Left Knee Brace</option>
+                    <option value="both-ankle-brace">Both Ankle Brace</option>
+                    <option value="both-wrist-brace">Both Wrist Brace</option>
+                    <option value="left-wrist-brace">Left Wrist Brace</option>
+                    <option value="left-elbow-brace">Left Elbow Brace</option>
+                    <option value="both-elbow-brace">Both Elbow Brace</option>
+                </select>
+                
+                @error('braces') <span class="text-red-600">{{ $message }}</span> @enderror
+            </div>
         </div>
 
         <!-- Second Column -->
