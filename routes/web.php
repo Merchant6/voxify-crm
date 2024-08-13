@@ -1,8 +1,10 @@
 <?php
 
+use App\Actions\DeleteProcessedFile;
 use App\Http\Controllers\DoctorOrderController;
 use App\Http\Controllers\PvTableController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 // Route::view('/', 'welcome');
 
@@ -29,5 +31,10 @@ Route::get('pv-pdf', [PvTableController::class, 'createdPdf'])
 Route::get('doctor-form', [DoctorOrderController::class, 'create'])
     ->middleware('auth')
     ->name('doctor-form');    
+
+Route::get('delete/sheet', function () {
+    return DeleteProcessedFile::run(request()->query('id'));
+})
+->name('delete-sheet');
 
 require __DIR__.'/auth.php';

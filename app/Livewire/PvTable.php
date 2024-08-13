@@ -20,15 +20,18 @@ class PvTable extends DataTableComponent
     
     ];
 
+    public string $fileNum;
+
+    public function mount()
+    {
+        $this->fileNum = request()->query('file');
+
+    }
+
     public function builder(): Builder
     {   
-        $request = (object)request();
-
         return PvPatient::query()
-        ->where(
-                'files_processed_id', 
-                $request->query('file') ?? 1
-            )
+            ->where('files_processed_id', $this->fileNum)
             ->select();
     }
 
