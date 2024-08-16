@@ -202,6 +202,15 @@
         <button type="submit" class="w-full px-auto py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow-sm hover:bg-blue-600">
             Submit
         </button>
+
+        @if (session()->has('message'))
+        <x-input-success :messages="session('message')" class="mt-2" />
+        @endif 
+
+        
+        @if (session()->has('error'))
+            <x-input-error  :messages="session('error')" class="mt-2" />
+        @endif 
     </div>
 
 </form>

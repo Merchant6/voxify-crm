@@ -2,9 +2,12 @@
 
 namespace App\Livewire;
 
+use App\Models\DoctorFormPatient;
 use App\Models\DoctorFormPhysician;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Offset;
@@ -42,31 +45,31 @@ class CreateDoctorOrder extends Component
 
     protected $rules = [
         // First Column
-        // 'order_date' => 'required|date',
-        // 'patient_first_name' => 'required|string|max:255',
-        // 'patient_last_name' => 'required|string|max:255',
-        // 'patient_dob' => 'required|date',
-        // 'patient_address' => 'required|string|max:255',
-        // 'patient_city' => 'required|string|max:255',
-        // 'patient_state' => 'required|string|max:255',
-        // 'patient_postal_code' => 'required|string|max:10',
-        // 'patient_phone_no' => 'required|string|max:15',
-        // 'primary_insurance' => 'required|string|max:255',
-        // 'policy_no' => 'required|string|max:255',
-        // 'private_insurance' => 'required|string|max:255',
-        // 'private_insurance_no' => 'required|string|max:255',
-        // 'height' => 'required|string|max:10',
-        // 'weight' => 'required|string|max:10',
-        // 'braces' => 'required',
+        'order_date' => 'required|date',
+        'patient_first_name' => 'required|string|max:255',
+        'patient_last_name' => 'required|string|max:255',
+        'patient_dob' => 'required|date',
+        'patient_address' => 'required|string|max:255',
+        'patient_city' => 'required|string|max:255',
+        'patient_state' => 'required|string|max:255',
+        'patient_postal_code' => 'required|string|max:10',
+        'patient_phone_no' => 'required|string|max:255',
+        'primary_insurance' => 'required|string|max:255',
+        'policy_no' => 'required|string|max:255',
+        'private_insurance' => 'required|string|max:255',
+        'private_insurance_no' => 'required|string|max:255',
+        'height' => 'required|string|max:10',
+        'weight' => 'required|string|max:10',
+        'braces' => 'required',
 
         // Second Column
-        // 'physician_name' => 'required|string|max:255',
-        // 'physician_npi' => 'required|string|max:20',
-        // 'physician_city' => 'required|string|max:255',
-        // 'physician_state' => 'required|string|max:255',
-        // 'physician_postal_code' => 'required|string|max:10',
-        // 'physician_number' => 'required|string|max:15',
-        // 'physician_fax_number' => 'required|string|max:15',
+        'physician_name' => 'required|string|max:255',
+        'physician_npi' => 'required|string|max:20',
+        'physician_city' => 'required|string|max:255',
+        'physician_state' => 'required|string|max:255',
+        'physician_postal_code' => 'required|string|max:10',
+        'physician_number' => 'required|string|max:255',
+        'physician_fax_number' => 'required|string|max:255',
         'physician_signature' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         'physician_signed_date' => 'required|image|mimes:jpeg,png,jpg|max:2048',
     ];
@@ -102,21 +105,45 @@ class CreateDoctorOrder extends Component
     public string $signedDate = 'images/signed-date/';
 
     public function submit()
-    {
-        $validated = $this->validate();
-        
-        // $this->savePatient($patient);
-        // $this->saveDoctor($doctor);
-        $this->saveSignature();
-        $this->saveSignedDate();
+    {    
+        $this->validate();
+
+        $this->transaction();
+
+        session()->flash('message', 'The form has been submitted successfully.');
     }
 
-    public function savePatient(array $data)
+    public function transaction()
     {
-        return;
+        return DB::transaction(function () {
+            $this->savePatient();
+            $this->saveDoctor();
+        });
     }
 
-    public function saveDoctor(array $data)
+    public function savePatient()
+    {
+        return DoctorFormPatient::create([
+            'order_date' => $this->order_date,
+            'first_name' => $this->patient_first_name,
+            'last_name'=> $this->patient_last_name,
+            'dob' => $this->patient_dob,
+            'address' => $this->patient_address,
+            'city' => $this->patient_city,
+            'state' => $this->patient_state,
+            'postal_code' => $this->patient_postal_code,
+            'phone' => $this->patient_phone_no,
+            'primary_insurance' => $this->primary_insurance,
+            'policy_number' => $this->policy_no,
+            'private_insurance' => $this->private_insurance,
+            'private_insurance_number' => $this->private_insurance_no,
+            'height' => $this->height,
+            'width' => $this->weight,
+            'brace' => $this->braces,
+        ]);
+    }
+
+    public function saveDoctor()
     {
         return DoctorFormPhysician::create([
             'name' => $this->physician_name,
@@ -133,7 +160,7 @@ class CreateDoctorOrder extends Component
 
     public function saveSignature()
     {   
-        $extension = $this->physician_signed_date->getClientOriginalExtension();
+        $extension = $this->physician_signature->getClientOriginalExtension();
         $uniqid = uniqid('signature_', true);
         $fileName =  "$uniqid.$extension";
 
