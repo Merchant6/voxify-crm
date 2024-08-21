@@ -37,4 +37,8 @@ Route::get('delete/sheet', function () {
 })
 ->name('delete-sheet');
 
+// Route::get('doctor-orders', [DoctorOrderController::class, 'index'])
+//     ->middleware('auth')
+//     ->name('doctor-orders');
+
 require __DIR__.'/auth.php';

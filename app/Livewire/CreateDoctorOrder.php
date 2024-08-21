@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Actions\CreatePdfFromDocx;
 use App\Models\DoctorFormPatient;
 use App\Models\DoctorFormPhysician;
 use Illuminate\Support\Arr;
@@ -35,6 +36,7 @@ class CreateDoctorOrder extends Component
 
     public $physician_name;
     public $physician_npi;
+    public $physician_address;    
     public $physician_city;
     public $physician_state;
     public $physician_postal_code;
@@ -54,10 +56,10 @@ class CreateDoctorOrder extends Component
         'patient_state' => 'required|string|max:255',
         'patient_postal_code' => 'required|string|max:10',
         'patient_phone_no' => 'required|string|max:255',
-        'primary_insurance' => 'required|string|max:255',
-        'policy_no' => 'required|string|max:255',
-        'private_insurance' => 'required|string|max:255',
-        'private_insurance_no' => 'required|string|max:255',
+        'primary_insurance' => 'string|max:255',
+        'policy_no' => 'string|max:255',
+        'private_insurance' => 'string|max:255',
+        'private_insurance_no' => 'string|max:255',
         'height' => 'required|string|max:10',
         'weight' => 'required|string|max:10',
         'braces' => 'required',
@@ -65,6 +67,7 @@ class CreateDoctorOrder extends Component
         // Second Column
         'physician_name' => 'required|string|max:255',
         'physician_npi' => 'required|string|max:20',
+        'physician_address' => 'required|string|max:255',
         'physician_city' => 'required|string|max:255',
         'physician_state' => 'required|string|max:255',
         'physician_postal_code' => 'required|string|max:10',
@@ -101,83 +104,28 @@ class CreateDoctorOrder extends Component
         'braces.required' => "The brace option is required."
     ];
 
-    public string $signature = 'images/signature/';
-    public string $signedDate = 'images/signed-date/';
-
     public function submit()
     {    
-        $this->validate();
+        $validatedData = $this->validate();
 
-        $this->transaction();
+        //Temporary Signature and Signed Date file locations
+        $validatedData['physician_signature'] = $this->getSignatureTempPath();
+        $validatedData['physician_signed_date'] = $this->getSignedTempPath();
 
-        session()->flash('message', 'The form has been submitted successfully.');
+        return CreatePdfFromDocx::make()
+            ->handle($validatedData); 
+
+        // session()->flash('message', 'The form has been submitted successfully.');
     }
 
-    public function transaction()
-    {
-        return DB::transaction(function () {
-            $this->savePatient();
-            $this->saveDoctor();
-        });
-    }
-
-    public function savePatient()
-    {
-        return DoctorFormPatient::create([
-            'order_date' => $this->order_date,
-            'first_name' => $this->patient_first_name,
-            'last_name'=> $this->patient_last_name,
-            'dob' => $this->patient_dob,
-            'address' => $this->patient_address,
-            'city' => $this->patient_city,
-            'state' => $this->patient_state,
-            'postal_code' => $this->patient_postal_code,
-            'phone' => $this->patient_phone_no,
-            'primary_insurance' => $this->primary_insurance,
-            'policy_number' => $this->policy_no,
-            'private_insurance' => $this->private_insurance,
-            'private_insurance_number' => $this->private_insurance_no,
-            'height' => $this->height,
-            'width' => $this->weight,
-            'brace' => $this->braces,
-        ]);
-    }
-
-    public function saveDoctor()
-    {
-        return DoctorFormPhysician::create([
-            'name' => $this->physician_name,
-            'npi'=> $this->physician_npi,
-            'city' => $this->physician_city,
-            'state'=> $this->physician_state,
-            'postal_code' => $this->physician_postal_code,
-            'number' => $this->physician_number,
-            'fax_number' => $this->physician_fax_number,
-            'signature' => $this->saveSignature(),
-            'signed_date' => $this->saveSignedDate(),
-        ]);
-    }
-
-    public function saveSignature()
+    public function getSignatureTempPath()
     {   
-        $extension = $this->physician_signature->getClientOriginalExtension();
-        $uniqid = uniqid('signature_', true);
-        $fileName =  "$uniqid.$extension";
-
-        $this->physician_signature->storeAs($this->signature, $fileName, 'public');
-
-        return public_path("/$this->signature . $fileName");
+        return $this->physician_signature->getRealPath();
     }
 
-    public function saveSignedDate()
+    public function getSignedTempPath()
     {   
-        $extension = $this->physician_signed_date->getClientOriginalExtension();
-        $uniqid = uniqid('signedDate_', true);
-        $fileName = "$uniqid.$extension";
-
-        $this->physician_signed_date->storeAs($this->signedDate, $fileName, 'public');
-
-        return $this->signedDate . $fileName;
+        return $this->physician_signed_date->getRealPath();
     }
 
     public function render()

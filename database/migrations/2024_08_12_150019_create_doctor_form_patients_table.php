@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('doctor_form_patients', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('physician_id');
+            $table->foreign('physician_id')
+                ->references('id')
+                ->on('doctor_form_physicians')
+                ->onDelete('cascade');
             $table->string('order_date');
             $table->string('first_name');
             $table->string('last_name');
@@ -27,7 +32,7 @@ return new class extends Migration
             $table->string('private_insurance');
             $table->string('private_insurance_number');
             $table->string('height');
-            $table->string('width');
+            $table->string('weight');
             $table->string('brace');
             $table->timestamps();
         });

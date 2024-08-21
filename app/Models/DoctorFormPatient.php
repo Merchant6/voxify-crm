@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DoctorFormPatient extends Model
 {
     use HasFactory;
-
     protected $fillable = [
+        'physician_id',
         'order_date',
         'first_name',
         'last_name',
@@ -24,7 +25,12 @@ class DoctorFormPatient extends Model
         'private_insurance',
         'private_insurance_number',
         'height',
-        'width',
+        'weight',
         'brace',
     ];
+
+    public function doctorFormPhysician(): BelongsTo
+    {
+        return $this->belongsTo(DoctorFormPhysician::class, 'id');
+    }
 }

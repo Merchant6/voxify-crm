@@ -114,15 +114,18 @@
                 <label for="brace" class="block text-white-700">Brace</label>
                 {{-- <input type="file" id="physician_signed_date" class="dark:bg-gray-700 mt-1 block w-full border-gray-300 rounded-md shadow-sm p-4" wire:model="physician_signed_date"> --}}
                 <select wire:model="braces" id="brace" class="dark:bg-gray-700 mt-1 mb-1 block w-full border-gray-300 rounded-md shadow-sm">
-                    <option>Select an option</option>
-                    <option value="back-braces">Back Braces</option>
-                    <option value="both-knee-brace">Both Knee Brace</option>
-                    <option value="left-knee-brace">Left Knee Brace</option>
-                    <option value="both-ankle-brace">Both Ankle Brace</option>
-                    <option value="both-wrist-brace">Both Wrist Brace</option>
-                    <option value="left-wrist-brace">Left Wrist Brace</option>
-                    <option value="left-elbow-brace">Left Elbow Brace</option>
-                    <option value="both-elbow-brace">Both Elbow Brace</option>
+                    <option >Select an option</option>
+                    <option value="both-wrist-braces">Both Wrist Braces</option>
+                    <option value="back-braces">Back Brace</option>
+                    <option value="both-elbow-braces">Both Elbow Braces</option>
+                    <option value="left-wrist-braces">Left Wrist Brace</option>
+                    <option value="right-shoulder-braces">Right Shoulder Brace</option>
+                    <option value="both-knee-braces">Both Knee Braces</option>
+                    <option value="right-wrist-brace">Right Wrist Brace</option>
+                    <option value="left-shoulder-brace">Left Shoulder Brace</option>
+                    <option value="left-ankle-brace">Left Ankle Brace</option>
+                    <option value="both-ankle-braces">Both Ankle Braces</option>
+                    <option value="right-ankle-braces">Right Ankle Braces</option>
                 </select>
                 
                 @error('braces') <span class="text-red-600">{{ $message }}</span> @enderror
@@ -143,6 +146,13 @@
                 <label for="physician_npi" class="block text-white-700">Physician NPI</label>
                 <input type="text" id="physician_npi" class="dark:bg-gray-700 mt-1 block w-full border-gray-300 rounded-md shadow-sm" wire:model="physician_npi">
                 @error('physician_npi') <span class="text-red-600">{{ $message }}</span> @enderror
+            </div>
+
+            <!-- Physician Address -->
+            <div class="mb-4">
+                <label for="physician_address" class="block text-white-700">Physician Address</label>
+                <input type="text" id="physician_address" class="dark:bg-gray-700 mt-1 block w-full border-gray-300 rounded-md shadow-sm" wire:model="physician_address">
+                @error('physician_address') <span class="text-red-600">{{ $message }}</span> @enderror
             </div>
 
             <!-- Physician City -->
@@ -202,6 +212,10 @@
         <button type="submit" class="w-full px-auto py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow-sm hover:bg-blue-600">
             Submit
         </button>
+
+        <div wire:loading class="text-center">
+            <p class="text-red mt-2">Processing the form and creating your file...</p>
+        </div>
 
         @if (session()->has('message'))
         <x-input-success :messages="session('message')" class="mt-2" />
