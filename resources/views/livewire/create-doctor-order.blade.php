@@ -121,9 +121,9 @@
                     <option value="left-wrist-braces">Left Wrist Brace</option>
                     <option value="right-shoulder-braces">Right Shoulder Brace</option>
                     <option value="both-knee-braces">Both Knee Braces</option>
-                    <option value="right-wrist-brace">Right Wrist Brace</option>
-                    <option value="left-shoulder-brace">Left Shoulder Brace</option>
-                    <option value="left-ankle-brace">Left Ankle Brace</option>
+                    <option value="right-wrist-braces">Right Wrist Brace</option>
+                    <option value="left-shoulder-braces">Left Shoulder Brace</option>
+                    <option value="left-ankle-braces">Left Ankle Brace</option>
                     <option value="both-ankle-braces">Both Ankle Braces</option>
                     <option value="right-ankle-braces">Right Ankle Braces</option>
                 </select>

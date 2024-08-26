@@ -26,7 +26,7 @@ class CreateDoctorOrder extends Component
     public $patient_state;
     public $patient_postal_code;
     public $patient_phone_no;
-    public $primary_insurance;
+    public $primary_insurance = 'Medicare';
     public $policy_no;
     public $private_insurance;
     public $private_insurance_no;
@@ -73,8 +73,8 @@ class CreateDoctorOrder extends Component
         'physician_postal_code' => 'required|string|max:10',
         'physician_number' => 'required|string|max:255',
         'physician_fax_number' => 'required|string|max:255',
-        'physician_signature' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        'physician_signed_date' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        'physician_signature' => 'image|mimes:jpeg,png,jpg|max:2048',
+        'physician_signed_date' => 'image|mimes:jpeg,png,jpg|max:2048',
     ];
 
     protected $messages = [
