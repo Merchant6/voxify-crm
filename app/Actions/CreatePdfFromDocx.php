@@ -82,10 +82,10 @@ class CreatePdfFromDocx
         $processor = $this->makeTemplateProcessor($template);
 
         $processor->setValues([
-            'order_date' => $data['order_date'] ?? ' - ',
+            'order_date' => Carbon::parse($data['order_date'])->format('m/d/Y') ?? ' - ',
             'fname' => $data['patient_first_name'] ?? ' - ',
             'lname' => $data['patient_last_name'] ?? ' - ',
-            'dob' => $data['patient_dob'] ?? ' - ',
+            'dob' => Carbon::parse($data['patient_dob'])->format('m/d/Y') ?? ' - ',
             'address' => $data['patient_address'] ?? ' - ',
             'city' => $data['patient_city'] ?? ' - ',
             'state' => $data['patient_state'] ?? ' - ',
