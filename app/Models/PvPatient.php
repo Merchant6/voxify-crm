@@ -23,8 +23,6 @@ class PvPatient extends Model
         'city',
         'state',
         'zip_code',
-        'height',
-        'weight',
         'files_processed_id'
     ];
 

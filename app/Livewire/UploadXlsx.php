@@ -20,10 +20,10 @@ class UploadXlsx extends Component
     {
         $filename = $this->file->getClientOriginalName();
 
-        $exists = Storage::disk('public')->exists("excel/$filename");
+        $exists = Storage::disk('public')->exists("excel" . DIRECTORY_SEPARATOR ."$filename");
         if(!$exists){
 
-            $path = $this->file->storeAs('/excel', $filename, 'public');
+            $path = $this->file->storeAs(DIRECTORY_SEPARATOR . "excel", $filename, 'public');
             Session::flash('message', 'File uploaded successfully, is now being processed.');
             FileUploaded::dispatch($path);
 

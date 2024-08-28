@@ -29,7 +29,7 @@ class CreatePvPdf
             return response()->noContent();
         }
 
-        $template = public_path("/storage/pv-pdf/pv.docx");
+        $template = public_path(DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'pv-pdf' . DIRECTORY_SEPARATOR . 'pv.docx');
         
         //Address
         $street = $record['address'];
@@ -61,7 +61,7 @@ class CreatePvPdf
         $path = public_path($filenameWithExtenstion);
         $downloadFile = $this->docxToPdf($path, $filename);
         
-        $publicPathwithBaseName = public_path('bulk/' . basename($downloadFile));
+        $publicPathwithBaseName = public_path("bulk" . DIRECTORY_SEPARATOR . basename($downloadFile));
 
         File::move($downloadFile, $publicPathwithBaseName);
     }

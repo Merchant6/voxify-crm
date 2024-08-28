@@ -22,18 +22,18 @@ class CreatePdfFromDocx
     public function __construct()
     {
         $this->templates = [
-            'back-braces' => public_path('/doc-temp/back-braces.docx'),
-            'both-elbow-braces' => public_path('/doc-temp/both-elbow-braces.docx'),
-            'right-shoulder-braces' => public_path('/doc-temp/right-shoulder-braces.docx'),
-            'both-knee-braces' => public_path('/doc-temp/both-knee-braces.docx'),
-            'right-wrist-braces' => public_path('/doc-temp/right-wrist-braces.docx'),
-            'left-shoulder-braces' => public_path('/doc-temp/left-shoulder-braces.docx'),
-            'left-ankle-braces' => public_path('/doc-temp/left-ankle-braces.docx'),
-            'both-ankle-braces' => public_path('/doc-temp/both-ankle-braces.docx'),
-            'right-ankle-braces' => public_path('/doc-temp/right-ankle-braces.docx'),
-            'both-wrist-braces' => public_path('/doc-temp/both-wrist-braces.docx'),
-            'left-wrist-braces' => public_path('/doc-temp/left-wrist-braces.docx'),
-        ]; 
+            'back-braces' => public_path(DIRECTORY_SEPARATOR . 'doc-temp' . DIRECTORY_SEPARATOR . 'back-braces.docx'),
+            'both-elbow-braces' => public_path(DIRECTORY_SEPARATOR . 'doc-temp' . DIRECTORY_SEPARATOR . 'both-elbow-braces.docx'),
+            'right-shoulder-braces' => public_path(DIRECTORY_SEPARATOR . 'doc-temp' . DIRECTORY_SEPARATOR . 'right-shoulder-braces.docx'),
+            'both-knee-braces' => public_path(DIRECTORY_SEPARATOR . 'doc-temp' . DIRECTORY_SEPARATOR . 'both-knee-braces.docx'),
+            'right-wrist-braces' => public_path(DIRECTORY_SEPARATOR . 'doc-temp' . DIRECTORY_SEPARATOR . 'right-wrist-braces.docx'),
+            'left-shoulder-braces' => public_path(DIRECTORY_SEPARATOR . 'doc-temp' . DIRECTORY_SEPARATOR . 'left-shoulder-braces.docx'),
+            'left-ankle-braces' => public_path(DIRECTORY_SEPARATOR . 'doc-temp' . DIRECTORY_SEPARATOR . 'left-ankle-braces.docx'),
+            'both-ankle-braces' => public_path(DIRECTORY_SEPARATOR . 'doc-temp' . DIRECTORY_SEPARATOR . 'both-ankle-braces.docx'),
+            'right-ankle-braces' => public_path(DIRECTORY_SEPARATOR . 'doc-temp' . DIRECTORY_SEPARATOR . 'right-ankle-braces.docx'),
+            'both-wrist-braces' => public_path(DIRECTORY_SEPARATOR . 'doc-temp' . DIRECTORY_SEPARATOR . 'both-wrist-braces.docx'),
+            'left-wrist-braces' => public_path(DIRECTORY_SEPARATOR . 'doc-temp' . DIRECTORY_SEPARATOR . 'left-wrist-braces.docx'),
+        ];
 
     }
 

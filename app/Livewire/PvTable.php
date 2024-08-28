@@ -74,10 +74,6 @@ class PvTable extends DataTableComponent
                 ->sortable(),
             Column::make("Zip code", "zip_code")
                 ->sortable(),
-            Column::make("Height", "height")
-                ->sortable(),
-            Column::make("Weight", "weight")
-                ->sortable(),
             Column::make("Doctor Name", "doctor.name")
                 ->searchable(),
             Column::make("Doctor Address", "doctor.address")

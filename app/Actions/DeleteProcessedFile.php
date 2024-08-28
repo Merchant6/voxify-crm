@@ -24,7 +24,9 @@ class DeleteProcessedFile
         $deleteRecord = $record->delete();
 
         $sheetName = $first->file_name;
-        $sheetPath = public_path("/storage/excel/$sheetName");
+        $sheetPath = public_path( 
+            DIRECTORY_SEPARATOR . "storage" . DIRECTORY_SEPARATOR . "excel" . DIRECTORY_SEPARATOR . $sheetName
+        );
         $sheetExists = File::exists($sheetPath);
 
         if($sheetExists){

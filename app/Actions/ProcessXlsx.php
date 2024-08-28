@@ -24,7 +24,7 @@ class ProcessXlsx
     public function handle(string $filePath, string $sheetId)
     {   
         //Fully Qualified File Path 
-        $fqfp = public_path() . '/storage/' . $filePath;
+        $fqfp = public_path() . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . $filePath;
 
         //Spreadsheet
         $spreadsheet = $this->initReader($fqfp);
@@ -52,7 +52,7 @@ class ProcessXlsx
             }
             $rows[] = $cells;
         }
-        Log::info(json_encode($rows, JSON_PRETTY_PRINT));
+        
         $this->bulkInsert($rows, $sheetId);
     }
 
@@ -71,11 +71,11 @@ class ProcessXlsx
 
         foreach ($array as $record) {
             // Extract patient information
-            $patientInfo = array_slice($record, 0, 11);
+            $patientInfo = array_slice($record, 0, 9);
             $patientData[] = $patientInfo;
 
             // Extract doctor information
-            $doctorInfo = array_slice($record, 11);
+            $doctorInfo = array_slice($record, 9);
             $doctorData[] = $doctorInfo;
         }
 
@@ -89,13 +89,15 @@ class ProcessXlsx
 
         // Define column mappings
         $doctorColumns = ['name', 'address', 'city', 'state', 'zip_code', 'phone', 'fax', 'npi'];
-        $patientColumns = ['first_name', 'last_name', 'dob', 'phone', 'mb_id', 'address', 'city', 'state', 'zip_code', 'height', 'weight'];
+        $patientColumns = ['first_name', 'last_name', 'dob', 'phone', 'mb_id', 'address', 'city', 'state', 'zip_code'];
 
         $doctorData = [];
         $patientData = [];
         
         foreach ($this->pvDoctor as $record) {
-            $doctorData[] = array_combine($doctorColumns, $record);
+            Log::info(json_encode($doctorColumns));
+            Log::info(json_encode($record));
+            $doctorData[] = array_combine($doctorColumns, array_filter($record));
         }
     
         foreach ($this->pvPatient as $record) {

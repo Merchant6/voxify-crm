@@ -27,7 +27,7 @@ class ProcessUploadedFile
     {
         $filePath = $event->filePath;
 
-        $filename = last(explode("/", $filePath));
+        $filename = last(explode(DIRECTORY_SEPARATOR, $filePath));
         $insert = FilesProcessed::create([
             'file_name' => $filename,
             'is_processed' => true
