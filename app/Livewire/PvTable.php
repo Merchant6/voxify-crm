@@ -37,14 +37,14 @@ class PvTable extends DataTableComponent
 
     public function configure(): void
     {
-        $this->setPrimaryKey('id')
-            ->setTableRowUrl(function($row) {
+        $this->setPrimaryKey('id');
+            // ->setTableRowUrl(function($row) {
 
-                return route('pv-pdf', [
-                    'record' => $row,
-                ]);
+            //     return route('pv-pdf', [
+            //         'record' => $row,
+            //     ]);
 
-            });
+            // });
 
         $this->setEagerLoadAllRelationsEnabled();
         $this->bulkActionsAreEnabled();
