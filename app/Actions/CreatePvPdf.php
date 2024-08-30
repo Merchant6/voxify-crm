@@ -97,8 +97,8 @@ class CreatePvPdf
 
     public function zip()
     {   
-        $date = date('d-m-Y');
-
+        $date = date('d-m-Y-H:i:s.u');
+        
         $zip = new ZipArchive();
         $zipFilename = "PV-PDFs-$date.zip";
 
