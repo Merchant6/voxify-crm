@@ -22,6 +22,8 @@ class FilesProcessedTable extends DataTableComponent
                 ]);
 
             });
+
+        $this->useComputedPropertiesDisabled();    
     }
 
     public function columns(): array
