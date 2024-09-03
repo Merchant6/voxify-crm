@@ -97,7 +97,7 @@ class ProcessXlsx
         foreach ($this->pvDoctor as $record) {
             Log::info(json_encode($doctorColumns));
             Log::info(json_encode($record));
-            $doctorData[] = array_combine($doctorColumns, array_filter($record));
+            $doctorData[] = array_combine($doctorColumns, $record);
         }
     
         foreach ($this->pvPatient as $record) {
