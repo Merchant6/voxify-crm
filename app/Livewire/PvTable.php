@@ -48,7 +48,7 @@ class PvTable extends DataTableComponent
 
         $this->setEagerLoadAllRelationsEnabled();
         $this->bulkActionsAreEnabled();
-        // $this->useComputedPropertiesDisabled(); 
+        $this->useComputedPropertiesDisabled(); 
 
     }
 
