@@ -1,5 +1,7 @@
 FROM php:8.2-alpine
 
+RUN apk add font-terminus font-inconsolata font-dejavu font-noto font-noto-cjk font-awesome font-noto-extra
+
 RUN apk add --no-cache \
     libzip-dev
 
