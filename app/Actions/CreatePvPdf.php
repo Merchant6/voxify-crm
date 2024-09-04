@@ -86,7 +86,7 @@ class CreatePvPdf
     public function docxToPdf(string $path, $outputFilename)
     {   
         $outputPdfName = "$outputFilename.pdf";
-
+        $_SERVER['HOME'] = "/root";
         $converter = new OfficeConverter($path, public_path());
         $converter->convertTo($outputPdfName);
 

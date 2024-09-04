@@ -256,7 +256,8 @@ class CreatePdfFromDocx
      * @return string|null
      */
     public function convertDocxToPdf(string $filePath)
-    {
+    {   
+        $_SERVER['HOME'] = "/root"; 
         $converter = new OfficeConverter($filePath);
         $int = random_int(PHP_INT_MIN, PHP_INT_MAX);
         $pdfPath = $converter->convertTo("Doctor-Order-$int.pdf");
