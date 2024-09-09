@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y \
     openssh-client \
     imagemagick \
     libreoffice \
-    npm
+    npm \
+    nano
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
