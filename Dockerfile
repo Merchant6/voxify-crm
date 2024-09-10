@@ -68,4 +68,4 @@ RUN npm run build
 EXPOSE 8080
 
 # Start the development server
-CMD php artisan serve --host=0.0.0.0
+CMD php artisan serve --host=0.0.0.0 --port=8080
