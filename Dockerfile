@@ -47,6 +47,9 @@ COPY . /app
 RUN composer install
 
 # Copy .env.example to .env
+COPY .env.example .env
+
+# Generate the app key 
 RUN php artisan key:generate
 
 # Link public to storage
